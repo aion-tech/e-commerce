@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8" ?>
+<!--
+  ~ Copyright 2024 Simone Rubino - Aion Tech
+  ~ License AGPL-3.0 or later (https://www.gnu.org/licenses/agpl).
+  -->
+<odoo>
+    <template
+        id="cart"
+        inherit_id="website_sale.cart"
+        name="Button to print the cart"
+        active="False"
+        customize_show="True"
+    >
+        <xpath
+            expr="//div[hasclass('oe_cart')]//t[@t-if='redirect_to_sign_in']/ancestor::div[hasclass('flex-column')]"
+            position="before"
+        >
+            <div
+                class="d-flex flex-column"
+                t-if="website_sale_order and website_sale_order.website_order_line"
+            >
+                <a
+                    class="btn btn-info"
+                    role="button"
+                    href="/shop/print?cart_print=true"
+                    target="_blank"
+                    aria-label="Print"
+                    title="Print"
+                >
+                    <i class="fa fa-print" />
+                    Print
+                </a>
+            </div>
+        </xpath>
+    </template>
+</odoo>
