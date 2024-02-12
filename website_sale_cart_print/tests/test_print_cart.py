@@ -5,7 +5,7 @@ import http
 from contextlib import contextmanager
 
 from odoo import Command
-from odoo.http import Request
+from odoo.http import Request, _generate_routing_rules
 from odoo.tests.common import HttpCase, tagged
 
 from odoo.addons.website.tools import MockRequest
@@ -30,6 +30,17 @@ class WebsiteSalePrintCart(HttpCase):
         )
         cls.order = cls._setup_order(cls.partner, cls.product)
         cls.website = cls.env.ref("website.default_website")
+
+        # Propagate routing for inherited endpoints,
+        # otherwise our endpoint won't have any routing
+        installed_modules = cls.env["ir.module.module"].search(
+            [
+                ("state", "=", "installed"),
+            ],
+        )
+        installed_modules_names = set(installed_modules.mapped("name"))
+        for _ in _generate_routing_rules(installed_modules_names, False):
+            pass
 
     @classmethod
     def _setup_customer_checkout(cls, customer):

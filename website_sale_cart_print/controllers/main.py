@@ -3,6 +3,7 @@
 
 from contextlib import contextmanager, nullcontext
 
+from odoo import http
 from odoo.http import request
 
 from odoo.addons.website_sale.controllers.main import WebsiteSale
@@ -29,6 +30,7 @@ class WebsiteSaleCartPrint(WebsiteSale):
             # If there was no order, delete the key
             del request.session["sale_last_order_id"]
 
+    @http.route()
     def print_saleorder(self, cart_print=None, **kwargs):
         patch_session_order_cm = (
             self._cart_print_patch_session_order()

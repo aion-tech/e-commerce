@@ -5,19 +5,16 @@
   -->
 <odoo>
     <template
-        id="cart"
-        inherit_id="website_sale.cart"
+        id="payment"
+        inherit_id="website_sale.payment"
         name="Button to print the cart"
         active="False"
         customize_show="True"
     >
-        <xpath
-            expr="//div[hasclass('oe_cart')]//t[@t-if='redirect_to_sign_in']/ancestor::div[hasclass('flex-column')]"
-            position="before"
-        >
+        <xpath expr="//div[@id='address_on_payment']" position="after">
             <div
-                class="d-flex flex-column"
                 t-if="website_sale_order and website_sale_order.website_order_line"
+                class="mt-3"
             >
                 <a
                     class="btn btn-info"
